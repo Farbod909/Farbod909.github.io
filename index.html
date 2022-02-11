@@ -17,15 +17,16 @@
             width: 100vw;
             height: 100vh;
             height: var(--app-height);
+            touch-action: manipulation;
             font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
         }
         h1 {
-            padding-left: 5px;
-            padding-right: 5px;
+            margin: 0 !important;
+            padding: 5px;
         }
         .container {
             display: grid;
-            grid-template-rows: 100px 1fr 210px;
+            grid-template-rows: 50px 1fr 210px;
             margin: 0;
             padding: 0;
             border: 0;
@@ -266,7 +267,7 @@ function evaluateGuess(guessedLettersElements, correctWord, dictionary) {
     currentWord++;
     if (guessedWord === correctWord) {
         $("h1").fadeOut(500, function() {
-            $("h1").html("Happy Valentine's Day. I like you _____ much!").fadeIn(1000);
+            $("h1").css("font-size", "18px").html("Happy Valentine's Day. I like you _____ much!").fadeIn(1000);
         })
     }
 }
