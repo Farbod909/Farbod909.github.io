@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        h1 {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        .container {
+            display: grid;
+            grid-template-rows: 100px 1fr 210px;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        .container-row {
+            width: 100%;
+            text-align: center;
+        }
+        #guesses_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #guesses {
+            display: grid;
+            grid-template-rows: repeat(6, 1fr);
+            grid-template-columns: repeat(5, 1fr);
+            width: 100%;
+            height: 100%;
+            max-width: 350px;
+            max-height: 420px;
+            margin: 0 auto;
+        }
+        .guess-letter {
+            border: 2px solid rgb(212, 214, 218);;
+            margin: 3px;
+            font-size: 2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        .filled {
+            color: black !important;
+            background-color: white !important;
+            border-color: rgb(136, 138, 140) !important;
+        }
+        .correct {
+            color: white !important;
+            background-color: rgb(121, 168, 107) !important;
+            border-color: rgb(121, 168, 107) !important;
+        }
+        .halfcorrect {
+            color: white !important;
+            background-color: rgb(197, 181, 102) !important;
+            border-color: rgb(197, 181, 102) !important;
+        }
+        .incorrect {
+            color: white !important;
+            background-color: rgb(121, 124, 126) !important;
+            border-color: rgb(121, 124, 126) !important;
+        }
+        #keyboard {
+            width: 100%;
+            max-width: 500px;
+            height: 200px;
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr;
+            margin: auto;
+            margin-top: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        #kb_row1 {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+        }
+        #kb_row2 {
+            display: grid;
+            grid-template-columns: 1fr repeat(9, 2fr) 1fr;
+        }
+        #kb_row3 {
+            display: grid;
+            grid-template-columns: 3fr repeat(7, 2fr) 3fr;
+        }
+        #keyboard button {
+            background-color: rgb(212, 214, 218);
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            margin: none;
+            margin: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="container-row">
+            <h1>Wordle</h1>
+        </div>
+        <div class="container-row" id="guesses_container">
+            <div id="guesses">
+                <div class="guess-letter empty guess-word-0"></div>
+                <div class="guess-letter empty guess-word-0"></div>
+                <div class="guess-letter empty guess-word-0"></div>
+                <div class="guess-letter empty guess-word-0"></div>
+                <div class="guess-letter empty guess-word-0"></div>
+                <div class="guess-letter empty guess-word-1"></div>
+                <div class="guess-letter empty guess-word-1"></div>
+                <div class="guess-letter empty guess-word-1"></div>
+                <div class="guess-letter empty guess-word-1"></div>
+                <div class="guess-letter empty guess-word-1"></div>
+                <div class="guess-letter empty guess-word-2"></div>
+                <div class="guess-letter empty guess-word-2"></div>
+                <div class="guess-letter empty guess-word-2"></div>
+                <div class="guess-letter empty guess-word-2"></div>
+                <div class="guess-letter empty guess-word-2"></div>
+                <div class="guess-letter empty guess-word-3"></div>
+                <div class="guess-letter empty guess-word-3"></div>
+                <div class="guess-letter empty guess-word-3"></div>
+                <div class="guess-letter empty guess-word-3"></div>
+                <div class="guess-letter empty guess-word-3"></div>
+                <div class="guess-letter empty guess-word-4"></div>
+                <div class="guess-letter empty guess-word-4"></div>
+                <div class="guess-letter empty guess-word-4"></div>
+                <div class="guess-letter empty guess-word-4"></div>
+                <div class="guess-letter empty guess-word-4"></div>
+                <div class="guess-letter empty guess-word-5"></div>
+                <div class="guess-letter empty guess-word-5"></div>
+                <div class="guess-letter empty guess-word-5"></div>
+                <div class="guess-letter empty guess-word-5"></div>
+                <div class="guess-letter empty guess-word-5"></div>
+            </div>
+        </div>
+        <div class="container-row">
+            <div id="keyboard">
+                <div id="kb_row1">
+                    <button id="k_q">Q</button>
+                    <button id="k_w">W</button>
+                    <button id="k_e">E</button>
+                    <button id="k_r">R</button>
+                    <button id="k_t">T</button>
+                    <button id="k_y">Y</button>
+                    <button id="k_u">U</button>
+                    <button id="k_i">I</button>
+                    <button id="k_o">O</button>
+                    <button id="k_p">P</button>
+                </div>
+                <div id="kb_row2">
+                    <div id="gap"></div>
+                    <button id="k_a">A</button>
+                    <button id="k_s">S</button>
+                    <button id="k_d">D</button>
+                    <button id="k_f">F</button>
+                    <button id="k_g">G</button>
+                    <button id="k_h">H</button>
+                    <button id="k_j">J</button>
+                    <button id="k_k">K</button>
+                    <button id="k_l">L</button>
+                    <div id="gap"></div>
+                </div>
+                <div id="kb_row3">
+                    <button id="k_enter">ENTER</button>
+                    <button id="k_z">Z</button>
+                    <button id="k_x">X</button>
+                    <button id="k_c">C</button>
+                    <button id="k_v">V</button>
+                    <button id="k_b">B</button>
+                    <button id="k_n">N</button>
+                    <button id="k_m">M</button>
+                    <button id="k_delete">DELETE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="dictionary.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+let wordLength = 5;
+let currentWord = 0;
+let correctWord = "berry".toLowerCase();
+if (correctWord.length !== wordLength) {
+    $("html").html("<h1>Error: Fix the correct word's length.</h1>")    
+}
+if (!isInDictionary(correctWord, globalDictionary)) {
+    $("html").html("<h1>Error: Fix the correct word.</h1>")    
+}
+
+function isInDictionary(word, dictionary) {
+    return dictionary.has(word.toLowerCase());
+}
+
+function addClassToKeyboardKey(guessedKeyId, className) {
+    let classNameRank = {
+        "incorrect": 1,
+        "halfcorrect": 2,
+        "correct": 3,
+    }
+
+    let guessedKeyElement = $("#"+guessedKeyId);
+    let guessedKeyElementClass = guessedKeyElement.attr("class")
+    if (guessedKeyElementClass == undefined) {
+        guessedKeyElement.addClass(className);
+    } else if (classNameRank[guessedKeyElementClass] < classNameRank[className]) {
+        guessedKeyElement.removeClass(guessedKeyElementClass).addClass(className);
+    }
+}
+
+function evaluateGuess(guessedLettersElements, correctWord, dictionary) {
+    if (guessedLettersElements.length < wordLength) {
+        alert("Not enough letters.");
+        return;
+    }
+    var guessedLetters = []
+    guessedLettersElements.each(function() {
+        guessedLetters.push($(this).html().toLowerCase());
+    });
+    let guessedWord = guessedLetters.join("").toLowerCase();
+    if (!isInDictionary(guessedWord, dictionary)) {
+        alert("Not in word list.");
+        return;
+    }
+    guessedLettersElements.each(function(index) {
+        let guessedKeyId = "k_" + guessedLetters[index];
+        if (guessedLetters[index] === correctWord.charAt(index)) {
+            $(this).removeClass("filled").addClass("correct");
+            addClassToKeyboardKey(guessedKeyId, "correct");          
+        } else if (correctWord.indexOf(guessedLetters[index]) !== -1) {
+            $(this).removeClass("filled").addClass("halfcorrect");
+            addClassToKeyboardKey(guessedKeyId, "halfcorrect");          
+        } else {
+            $(this).removeClass("filled").addClass("incorrect");
+            addClassToKeyboardKey(guessedKeyId, "incorrect");          
+        }
+    });
+    currentWord++;
+    if (guessedWord === correctWord) {
+        $("h1").fadeOut(500, function() {
+            $("h1").html("Happy Valentine's Day. I like you _____ much!").fadeIn(1000);
+        })
+    }
+}
+
+$(document).ready(function(){
+    $("button").click(function(){
+        let keyId = $(this).attr("id");
+        if (keyId === "k_enter") {
+            let guessedLettersElements = $(".guess-word-" + currentWord + ".filled");
+            evaluateGuess(guessedLettersElements, correctWord, globalDictionary);
+        } else if (keyId === "k_delete") {
+            $("#guesses .guess-letter.filled").last().removeClass("filled").addClass("empty").html("");
+        } else {
+            if ($("#guesses .guess-letter.filled").length >= wordLength) {
+                return;
+            }
+            if ($("#guesses .guess-word-" + (currentWord - 1) + ".correct").length >= wordLength) {
+                return;
+            }
+            let keyLetter = $("#"+keyId).html();
+            $("#guesses .guess-letter.empty:first").removeClass("empty").addClass("filled").html(keyLetter);
+        }
+    });
+});
+</script>
+</body>
+</html>
