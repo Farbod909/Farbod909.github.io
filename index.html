@@ -209,7 +209,7 @@ appHeight()
 <script>
 let wordLength = 5;
 let currentWord = 0;
-let correctWord = "berry".toLowerCase();
+let correctWord = "idiot".toLowerCase();
 if (correctWord.length !== wordLength) {
     $("html").html("<h1>Error: Fix the correct word's length.</h1>")    
 }
@@ -267,7 +267,7 @@ function evaluateGuess(guessedLettersElements, correctWord, dictionary) {
     currentWord++;
     if (guessedWord === correctWord) {
         $("h1").fadeOut(500, function() {
-            $("h1").css("font-size", "18px").html("Happy Valentine's Day. I like you _____ much!").fadeIn(1000);
+            $("h1").css("font-size", "18px").html("Happy Valentine's Day. Will you be my valentine, _____?").fadeIn(1000);
         })
     }
 }
